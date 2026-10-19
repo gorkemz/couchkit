@@ -116,6 +116,11 @@ You need JDK 21 and the Android SDK (Android Studio includes both). Release sign
 key ([receiver](receiver/README.md), [launcher](launcher/README.md)). This project never ships a
 signing key.
 
+APKs on the Releases page are signed with the CouchKit release certificate
+(SHA-256 `e43dabf8879e14a7796ab7df2ddc0973780378a92522ebefd238fcd4d6de793c`). Check it with
+`apksigner verify --print-certs couchkit-home.apk`. An app you build yourself has a different
+signature, so uninstall the release version first, or the other way round.
+
 ## Legal
 
 - **Licenses:**
