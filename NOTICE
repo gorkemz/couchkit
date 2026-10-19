@@ -1,0 +1,17 @@
+CouchKit
+Copyright 2026 The CouchKit Authors
+
+This repository contains parts under DIFFERENT licenses:
+
+  receiver/     GNU General Public License v3.0 (see receiver/LICENSE).
+                A modified version of "android-airplay-server" by jqssun
+                (https://github.com/jqssun/android-airplay-server, tag v0.0.33), which is based on
+                UxPlay (https://github.com/FDH2/UxPlay). Changes are listed in receiver/CHANGES.md.
+  everything    Apache License 2.0 (see LICENSE): launcher/, installer/, scripts/, docs/ and the
+  else          files in the repository root.
+
+Third-party components and their licenses: THIRD_PARTY.md.
+
+CouchKit is an independent project. It is not affiliated with, endorsed by, or sponsored by
+Apple Inc., Google LLC, TCL, or any streaming service. All product names, logos and brands are
+property of their respective owners and are used only to describe compatibility. See TRADEMARKS.md.

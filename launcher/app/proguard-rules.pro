@@ -1,0 +1,1 @@
+-keep class io.couchkit.home.HomeKeyService

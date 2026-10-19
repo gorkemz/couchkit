@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">CouchKit Home</string>
+    <string name="a11y_label">CouchKit Home — Home button</string>
+    <string name="a11y_desc">Opens CouchKit Home when the remote\'s Home button would show the stock home screen, and shows a small overlay when a followed football match has a goal. Reads no other data.</string>
+    <string name="settings">Settings</string>
+    <!-- Required attributions: shown only while the corresponding data is on screen. -->
+    <string name="tmdb_credit">Data: TMDB (not endorsed or certified by TMDB) · Streaming availability: JustWatch</string>
+    <string name="weather_credit">Weather: Open-Meteo.com (CC BY 4.0)</string>
+    <string name="move_hint">Move: ◀ ▶ ▲ ▼  ·  Done: OK  ·  Hide: hold OK</string>
+</resources>

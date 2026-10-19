@@ -1,0 +1,10 @@
+<!-- Modified by the CouchKit project (2026-10): original sofa glyph replaces the upstream icon -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:fillColor="#FF000000"
+        android:pathData="M39,36h30a5,5 0,0 1,5,5v12a5,5 0,0 1,-5,5h-30a5,5 0,0 1,-5,-5v-12a5,5 0,0 1,5,-5zM33,54h42a3,3 0,0 1,3,3v7a3,3 0,0 1,-3,3h-42a3,3 0,0 1,-3,-3v-7a3,3 0,0 1,3,-3zM30,46h2a5,5 0,0 1,5,5v15a5,5 0,0 1,-5,5h-2a5,5 0,0 1,-5,-5v-15a5,5 0,0 1,5,-5zM76,46h2a5,5 0,0 1,5,5v15a5,5 0,0 1,-5,5h-2a5,5 0,0 1,-5,-5v-15a5,5 0,0 1,5,-5zM32,70h2a1,1 0,0 1,1,1v4a1,1 0,0 1,-1,1h-2a1,1 0,0 1,-1,-1v-4a1,1 0,0 1,1,-1zM74,70h2a1,1 0,0 1,1,1v4a1,1 0,0 1,-1,1h-2a1,1 0,0 1,-1,-1v-4a1,1 0,0 1,1,-1z" />
+</vector>

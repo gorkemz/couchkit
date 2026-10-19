@@ -1,0 +1,14 @@
+# Optional extras (--debloat=full). Each one removes a feature; read the note first.
+com.google.android.apps.tv.dreamx | stock screensaver (use --screensaver or keep the default one)
+com.android.dreams.basic | fallback screensaver
+com.google.android.katniss | voice assistant / voice search (also breaks Play Store search on the TV)
+com.google.android.tv.assistant | assistant helper (pair with katniss)
+com.google.android.videos | Play Movies
+com.android.printspooler | printing
+com.android.camera2 | camera app
+com.android.messaging | SMS app
+com.google.android.syncadapters.calendar | calendar sync
+org.chromium.webview_shell | WebView test shell
+com.google.android.apps.nbu.smartconnect.tv | phone connect helper
+com.tcl.MultiScreenInteraction_TV | vendor screen-share app (system Cast/Miracast unaffected)
+com.tcl.usercenter | vendor account center

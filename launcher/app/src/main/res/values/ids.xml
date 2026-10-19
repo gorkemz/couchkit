@@ -1,0 +1,4 @@
+<resources>
+    <item name="anim_focus" type="id" />
+    <item name="anim_title" type="id" />
+</resources>

@@ -1,0 +1,12 @@
+# Disabled with `pm disable-user --user 0` (never uninstalled). Every entry is restored by --undo.
+# Vendor telemetry, ads and promo surfaces; no user-facing feature depends on them (tested on the
+# verified device, see docs/DEVICES.md). Format: package | what it is
+com.tcl.bi | vendor analytics / telemetry
+com.tcl.logkit | vendor log collection
+com.tcl.esticker | in-store demo sticker
+com.tcl.overseasappshow | vendor app showcase
+com.tcl.waterfall.overseas | vendor recommendation rows
+com.tcl.channelplus | vendor channel / ad content
+com.tcl.messagebox | vendor promo notifications
+com.google.android.feedback | bug report uploader
+com.google.android.play.games | Play Games

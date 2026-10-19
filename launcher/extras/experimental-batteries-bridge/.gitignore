@@ -1,0 +1,7 @@
+# Session cookies, tokens and the account name: never commit any of these.
+session/
+.venv/
+__pycache__/
+*.session
+*.cookiejar
+icloud_session.json

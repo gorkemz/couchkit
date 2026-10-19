@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 320x180 dp banner: frosted glass card on a dark gradient -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="320dp" android:height="180dp"
+    android:viewportWidth="320" android:viewportHeight="180">
+    <path android:pathData="M0,0h320v180h-320z">
+        <aapt:attr xmlns:aapt="http://schemas.android.com/aapt" name="android:fillColor">
+            <gradient android:type="linear" android:startX="0" android:startY="0"
+                android:endX="320" android:endY="180"
+                android:startColor="#FF2B3A67" android:endColor="#FF0B0B12" />
+        </aapt:attr>
+    </path>
+    <path android:fillColor="#33FFFFFF" android:strokeColor="#99FFFFFF" android:strokeWidth="1.5"
+        android:pathData="M86,52h148a18,18 0 0 1 18,18v40a18,18 0 0 1 -18,18h-148a18,18 0 0 1 -18,-18v-40a18,18 0 0 1 18,-18z" />
+    <path android:fillColor="#E6FFFFFF"
+        android:pathData="M108,78h104a6,6 0 0 1 0,12h-104a6,6 0 0 1 0,-12z" />
+</vector>

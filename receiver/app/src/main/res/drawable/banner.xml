@@ -1,0 +1,27 @@
+<!-- Modified by the CouchKit project (2026-10): original TV banner (gradient + sofa glyph) -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="320dp"
+    android:height="180dp"
+    android:viewportWidth="320"
+    android:viewportHeight="180">
+    <path android:pathData="M0,0h320v180H0z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:type="linear"
+                android:startX="0"
+                android:startY="0"
+                android:endX="320"
+                android:endY="180"
+                android:startColor="#FF16263A"
+                android:endColor="#FF04060A" />
+        </aapt:attr>
+    </path>
+    <path
+        android:fillColor="#FFEAF2F8"
+        android:pathData="M137.5,62.0h45.0a7.5,7.5 0,0 1,7.5,7.5v18.0a7.5,7.5 0,0 1,-7.5,7.5h-45.0a7.5,7.5 0,0 1,-7.5,-7.5v-18.0a7.5,7.5 0,0 1,7.5,-7.5zM128.5,89.0h63.0a4.5,4.5 0,0 1,4.5,4.5v10.5a4.5,4.5 0,0 1,-4.5,4.5h-63.0a4.5,4.5 0,0 1,-4.5,-4.5v-10.5a4.5,4.5 0,0 1,4.5,-4.5zM124.0,77.0h3.0a7.5,7.5 0,0 1,7.5,7.5v22.5a7.5,7.5 0,0 1,-7.5,7.5h-3.0a7.5,7.5 0,0 1,-7.5,-7.5v-22.5a7.5,7.5 0,0 1,7.5,-7.5zM193.0,77.0h3.0a7.5,7.5 0,0 1,7.5,7.5v22.5a7.5,7.5 0,0 1,-7.5,7.5h-3.0a7.5,7.5 0,0 1,-7.5,-7.5v-22.5a7.5,7.5 0,0 1,7.5,-7.5zM127.0,113.0h3.0a1.5,1.5 0,0 1,1.5,1.5v6.0a1.5,1.5 0,0 1,-1.5,1.5h-3.0a1.5,1.5 0,0 1,-1.5,-1.5v-6.0a1.5,1.5 0,0 1,1.5,-1.5zM190.0,113.0h3.0a1.5,1.5 0,0 1,1.5,1.5v6.0a1.5,1.5 0,0 1,-1.5,1.5h-3.0a1.5,1.5 0,0 1,-1.5,-1.5v-6.0a1.5,1.5 0,0 1,1.5,-1.5z" />
+    <path
+        android:pathData="M160,64v28"
+        android:strokeColor="#FF16263A"
+        android:strokeWidth="2.4" />
+</vector>

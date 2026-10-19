@@ -1,0 +1,84 @@
+
+== Device ==
+  dry-run: nothing is sent to any device; simulating 'tcl-smart-tv-pro' at 192.0.2.10:5555
+  TCL Smart TV Pro (BeyondTV4), Android SDK 30, armeabi-v7a, firmware V8-R51MT05-LF1V620
+  ✓ verified device: every step is available
+  DRY RUN - commands below are printed, not executed
+
+== Screen receiver (io.couchkit.cast) ==
+  $ adb install -r dist/couchkit-cast.apk
+  verify (skipped in dry-run): io.couchkit.cast installed
+  undo recorded: pm uninstall io.couchkit.cast
+  $ adb shell appops set io.couchkit.cast SYSTEM_ALERT_WINDOW allow
+  undo recorded: appops set io.couchkit.cast SYSTEM_ALERT_WINDOW default
+  verify (skipped in dry-run): overlay permission
+  $ adb shell am broadcast -f 0x20 -n io.couchkit.cast/io.github.jqssun.airplay.SettingsReceiver -a io.github.jqssun.airplay.SET_SETTING --es key server_name --es value 'Salon TV'
+  $ adb shell am broadcast -f 0x20 -n io.couchkit.cast/io.github.jqssun.airplay.SettingsReceiver -a io.github.jqssun.airplay.SET_SETTING --es key boot_auto_start --es value 'true'
+  $ adb shell am broadcast -f 0x20 -n io.couchkit.cast/io.github.jqssun.airplay.SettingsReceiver -a io.github.jqssun.airplay.SET_SETTING --es key run_in_background --es value 'true'
+  $ adb shell am start -n io.couchkit.cast/io.github.jqssun.airplay.MainActivity
+  $ adb shell am start -a android.intent.action.MAIN -c android.intent.category.HOME
+
+== Home screen (io.couchkit.home) ==
+  $ adb install -r dist/couchkit-home.apk
+  verify (skipped in dry-run): io.couchkit.home installed
+  undo recorded: pm uninstall io.couchkit.home
+  $ adb shell mkdir -p /sdcard/Android/data/io.couchkit.home/files
+  $ adb push launcher/config.example.json /sdcard/Android/data/io.couchkit.home/files/config.json
+  verify (skipped in dry-run): config.json on the TV
+
+== Start on boot (vendor boot manager) ==
+  $ adb shell appops set io.couchkit.cast 100 allow; appops set io.couchkit.cast 101 allow
+  undo recorded: appops set io.couchkit.cast 100 default; appops set io.couchkit.cast 101 default
+  verify (skipped in dry-run): io.couchkit.cast may start on boot
+  $ adb shell appops set io.couchkit.home 100 allow; appops set io.couchkit.home 101 allow
+  undo recorded: appops set io.couchkit.home 100 default; appops set io.couchkit.home 101 default
+  verify (skipped in dry-run): io.couchkit.home may start on boot
+
+== Default home screen ==
+  $ adb shell cmd package set-home-activity io.couchkit.home/.HomeActivity
+  undo recorded: cmd package set-home-activity com.google.android.apps.tv.launcherx/.home.HomeActivity
+  verify (skipped in dry-run): home role holder is io.couchkit.home
+
+== Home button (accessibility service) ==
+  The service only listens for the Home key while the stock home screen is in front; it cannot read screen content.
+  $ adb shell settings put secure enabled_accessibility_services 'io.couchkit.home/io.couchkit.home.HomeKeyService'; settings put secure accessibility_enabled 1
+  undo recorded: settings delete secure enabled_accessibility_services; settings put secure accessibility_enabled 0
+  verify (skipped in dry-run): service enabled
+
+== Replace the stock home screen ==
+  Disables the stock launcher AND the setup wizard together (disabling only the launcher locks
+  the TV in a recovery screen on the next boot). Frees ~300 MB RAM; stock recommendations,
+  notifications panel and the Apps tab go away. Revert: ./install.sh --host 192.0.2.10 --undo (or --rescue).
+  undo recorded: pm enable com.google.android.tungsten.setupwraith; pm enable com.google.android.apps.tv.launcherx; cmd package set-home-activity com.google.android.apps.tv.launcherx/com.google.android.apps.tv.launcherx.home.HomeActivity
+  $ adb shell pm disable-user --user 0 com.google.android.apps.tv.launcherx && pm disable-user --user 0 com.google.android.tungsten.setupwraith
+  verify (skipped in dry-run): Home resolves to CouchKit Home
+  Test it: restart the TV once. If it ever shows a black/recovery screen, run: ./install.sh --host 192.0.2.10 --rescue
+
+== Debloat (safe) ==
+  $ adb shell pm disable-user --user 0 com.tcl.bi
+  undo recorded: pm enable com.tcl.bi
+  $ adb shell pm disable-user --user 0 com.tcl.logkit
+  undo recorded: pm enable com.tcl.logkit
+  $ adb shell pm disable-user --user 0 com.tcl.esticker
+  undo recorded: pm enable com.tcl.esticker
+  $ adb shell pm disable-user --user 0 com.tcl.overseasappshow
+  undo recorded: pm enable com.tcl.overseasappshow
+  $ adb shell pm disable-user --user 0 com.tcl.waterfall.overseas
+  undo recorded: pm enable com.tcl.waterfall.overseas
+  $ adb shell pm disable-user --user 0 com.tcl.channelplus
+  undo recorded: pm enable com.tcl.channelplus
+  $ adb shell pm disable-user --user 0 com.tcl.messagebox
+  undo recorded: pm enable com.tcl.messagebox
+  $ adb shell pm disable-user --user 0 com.google.android.feedback
+  undo recorded: pm enable com.google.android.feedback
+  $ adb shell pm disable-user --user 0 com.google.android.play.games
+  undo recorded: pm enable com.google.android.play.games
+  ✓ 9 package(s) disabled (none uninstalled)
+
+== Screensaver ==
+  $ adb shell settings put secure screensaver_components io.couchkit.home/.GlassDream
+  undo recorded: settings put secure screensaver_components com.google.android.backdrop/com.google.android.backdrop.Backdrop
+  verify (skipped in dry-run): screensaver set
+
+== Done ==
+  dry-run finished: nothing was changed

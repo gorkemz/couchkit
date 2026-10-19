@@ -1,0 +1,7 @@
+{
+  "weather": { "lat": 41.01, "lon": 28.97, "label": "Istanbul" },
+  "fx": { "base": "USD", "symbols": ["EUR", "TRY"] },
+  "tmdb": { "apiKey": "YOUR_TMDB_API_KEY", "region": "TR", "language": "en-US" },
+  "football": { "apiKey": "YOUR_API_FOOTBALL_KEY", "leagues": [203, 39, 2], "season": 2026, "teams": [645, 611] },
+  "screensaver": { "overlay": true }
+}

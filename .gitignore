@@ -1,0 +1,37 @@
+# build output
+build/
+.gradle/
+.kotlin/
+.cxx/
+.externalNativeBuild/
+dist/*
+!dist/.gitkeep
+*.apk
+*.aab
+
+# local machine config and secrets - never commit
+local.properties
+keystore.properties
+*.jks
+*.keystore
+*.p12
+.secret-scan.local
+config.json
+!launcher/config.example.json
+
+# experimental bridge state
+**/session/
+**/.venv/
+__pycache__/
+*.session
+*.cookiejar
+icloud_session.json
+
+# IDE / OS
+.idea/
+*.iml
+.DS_Store
+
+# prebuilt upstream native libs (fetched by receiver/scripts/fetch-prebuilt-native.sh)
+receiver/app/src/main/jniLibs/
+.local/

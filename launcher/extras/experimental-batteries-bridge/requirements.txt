@@ -1,0 +1,4 @@
+# Unofficial client library for the iCloud web API (community project).
+pyicloud
+# Only needed for the opt-in --store-password mode.
+cryptography

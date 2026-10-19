@@ -1,0 +1,18 @@
+*.iml
+.gradle/
+/local.properties
+/.idea/
+.DS_Store
+/build/
+/app/build/
+/captures
+.externalNativeBuild/
+.cxx/
+
+*.jks
+# CouchKit
+src/main/jniLibs/
+keystore.properties
+*.keystore
+*.apk
+*.aab
