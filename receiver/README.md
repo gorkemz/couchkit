@@ -15,7 +15,7 @@ License: **GPL-3.0** ([LICENSE](LICENSE)). Not affiliated with or endorsed by Ap
 
 Requirements: JDK 21 (or the JBR bundled with Android Studio), Android SDK with platform 37.
 
-Fast path, armeabi-v7a only (uses upstream's unmodified native libraries, checked by SHA-256):
+Fast path (uses upstream's unmodified native libraries for armeabi-v7a, arm64-v8a and x86_64, checked by SHA-256):
 
 ```
 ./scripts/fetch-prebuilt-native.sh

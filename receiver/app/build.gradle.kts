@@ -15,10 +15,10 @@ val localProps = Properties().apply {
 val allAbis = listOf("arm64-v8a", "armeabi-v7a", "x86_64")
 
 // CouchKit: native code is built from the submodules by default. With -PprebuiltNative=true the
-// unmodified armeabi-v7a libraries from the upstream v0.0.33 release APK are used instead
+// unmodified libraries from the upstream v0.0.33 release APK are used instead
 // (fetched into src/main/jniLibs by scripts/fetch-prebuilt-native.sh, never committed).
 val prebuiltNative = (findProperty("prebuiltNative") as String?)?.toBoolean() ?: false
-val nativeAbis = if (prebuiltNative) listOf("armeabi-v7a") else allAbis
+val nativeAbis = if (prebuiltNative) allAbis.filter { file("src/main/jniLibs/$it").isDirectory } else allAbis
 
 android {
     namespace = "io.github.jqssun.airplay"

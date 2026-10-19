@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # SPDX-License-Identifier: Apache-2.0
 # Builds both apps and copies them to dist/ for the installer.
-#   ./scripts/build.sh                 receiver with upstream prebuilt native libs (armeabi-v7a)
+#   ./scripts/build.sh                 receiver with upstream prebuilt native libs (all ABIs)
 #   ./scripts/build.sh --native-source receiver native code built from the submodules (all ABIs)
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
@@ -25,7 +25,7 @@ cp "$ROOT/launcher/app/build/outputs/apk/standard/release/app-standard-release.a
 
 echo "== receiver ($NATIVE native libs)"
 if [ "$NATIVE" = prebuilt ]; then
-  [ -f "$ROOT/receiver/app/src/main/jniLibs/armeabi-v7a/libairplay_native.so" ] || "$ROOT/receiver/scripts/fetch-prebuilt-native.sh"
+  [ -f "$ROOT/receiver/app/src/main/jniLibs/arm64-v8a/libairplay_native.so" ] || "$ROOT/receiver/scripts/fetch-prebuilt-native.sh"
   (cd "$ROOT/receiver" && ./gradlew -q assembleRelease -PprebuiltNative=true)
 else
   (cd "$ROOT" && git submodule update --init --depth 1)

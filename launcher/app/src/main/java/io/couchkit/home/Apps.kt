@@ -37,7 +37,7 @@ object Launchers {
      * kill their *background* processes to free RAM (ActivityManager.killBackgroundProcesses).
      * Keep in sync with res/xml/home_key_service.xml.
      */
-    val PREVIOUS = listOf("com.google.android.apps.tv.launcherx")
+    val PREVIOUS = listOf("com.google.android.apps.tv.launcherx", "com.google.android.tvlauncher")
 }
 
 class AppEntry(

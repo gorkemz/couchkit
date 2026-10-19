@@ -6,6 +6,7 @@
   DRY RUN - commands below are printed, not executed
 
 == Screen receiver (io.couchkit.cast) ==
+  If the TV asks about Play Protect / an unknown app, choose 'Install anyway' with the remote.
   $ adb install -r dist/couchkit-cast.apk
   verify (skipped in dry-run): io.couchkit.cast installed
   undo recorded: pm uninstall io.couchkit.cast
@@ -19,6 +20,7 @@
   $ adb shell am start -a android.intent.action.MAIN -c android.intent.category.HOME
 
 == Home screen (io.couchkit.home) ==
+  If the TV asks about Play Protect / an unknown app, choose 'Install anyway' with the remote.
   $ adb install -r dist/couchkit-home.apk
   verify (skipped in dry-run): io.couchkit.home installed
   undo recorded: pm uninstall io.couchkit.home

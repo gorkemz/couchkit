@@ -6,11 +6,11 @@ Every modified file carries a "Modified by the CouchKit project" note at the top
 
 | File | Change |
 |---|---|
-| `app/build.gradle.kts` | application id `io.couchkit.cast`, version `0.0.33-couchkit.1`; optional `-PprebuiltNative=true` (use upstream's unmodified armeabi-v7a libraries instead of building them); release builds fall back to the local debug key when no release key is configured |
+| `app/build.gradle.kts` | application id `io.couchkit.cast`, version `0.0.33-couchkit.1`; optional `-PprebuiltNative=true` (use upstream's unmodified native libraries instead of building them); release builds fall back to the local debug key when no release key is configured |
 | `app/src/main/AndroidManifest.xml` | adds invisible `BootStartActivity` |
 | `BootReceiver.kt`, new `BootStartActivity.kt` | on boot, start the receiver through an invisible activity: some vendor boot managers (seen on TCL Google TV) block foreground-service starts from a background boot receiver |
 | `service/AirPlayService.kt` | buffers log lines while no screen is bound (for the intro); waits 0.7 s before taking over the screen so short probe connections from senders do not open the UI |
-| `ui/MainScreen.kt`, new `ui/TerminalIntro.kt` | optional terminal-style intro + configurable LED greeting on connect, goodbye text and automatic close when the last sender leaves, black screen for probe-only connections, controls hidden until used |
+| `ui/MainScreen.kt`, new `ui/TerminalIntro.kt` | neutral TV icons instead of the cast icon; optional terminal-style intro + configurable LED greeting on connect, goodbye text and automatic close when the last sender leaves, black screen for probe-only connections, controls hidden until used |
 | `Prefs.kt` | prefs `terminal_intro`, `welcome_text`, `goodbye_text`; default receiver name `CouchKit TV` |
 | `download/VideoDownloader.kt` | neutral download file name |
 | `res/values/strings.xml` | app name `CouchKit Cast`, neutral wording |

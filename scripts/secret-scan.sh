@@ -15,8 +15,9 @@ hit() { echo "✗ $1"; echo "$2" | sed 's/^/    /' | head -20; fail=1; }
 bad="$(echo "$files" | grep -iE '\.(jks|keystore|p12|pem|key|session|cookiejar|apk|aab|so)$|(^|/)(local|keystore)\.properties$|icloud_session|(^|/)config\.json$' || true)"
 [ -n "$bad" ] && hit "forbidden files" "$bad"
 
-scan() { # label, extended regex; placeholders like YOUR_API_KEY are allowed
-  local out; out="$(echo "$files" | tr '\n' '\0' | xargs -0 grep -nIiE "$2" -- 2>/dev/null | grep -v '"YOUR_[A-Z_]*"' || true)"
+# allowed on purpose: placeholders like "YOUR_API_KEY" and the documentation example IP 192.168.1.23
+scan() { # label, extended regex
+  local out; out="$(echo "$files" | tr '\n' '\0' | xargs -0 grep -nIiE "$2" -- 2>/dev/null | grep -v '"YOUR_[A-Z_]*"' | grep -vE '192\.168\.1\.23([^0-9]|$)' || true)"
   [ -n "$out" ] && hit "$1" "$out"
 }
 scan "private key" 'BEGIN [A-Z ]*PRIVATE KEY'

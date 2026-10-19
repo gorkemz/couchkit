@@ -14,7 +14,7 @@
 | AndroidX, Jetpack Compose, Media3, Hilt, Kotlin, kotlinx.coroutines, Material icons | via Maven, see `receiver/gradle/libs.versions.toml` | Apache-2.0 | |
 
 Prebuilt native libraries: `receiver/scripts/fetch-prebuilt-native.sh` can copy the **unmodified**
-`armeabi-v7a` libraries out of the official upstream release APK
+native libraries (armeabi-v7a, arm64-v8a, x86_64) out of the official upstream release APK
 (`https://github.com/jqssun/android-airplay-server/releases/download/v0.0.33/app-release.apk`,
 SHA-256 `2203dcc76ad884265e6e01c2147c917f100e93f37b91bf728bb3eed466396b32`). Their complete
 corresponding source is the upstream tag above plus the submodule commits pinned in this

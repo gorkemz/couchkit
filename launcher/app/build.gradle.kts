@@ -18,7 +18,7 @@ android {
     defaultConfig {
         applicationId = "io.couchkit.home"
         minSdk = 26
-        targetSdk = 30
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
     }
@@ -64,8 +64,6 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions { jvmTarget = "17" }
-    // Sideloaded TV app (no store); targetSdk 30 on purpose for Android 11 based TVs.
-    lint { disable += "ExpiredTargetSdkVersion" }
 }
 
 dependencies {

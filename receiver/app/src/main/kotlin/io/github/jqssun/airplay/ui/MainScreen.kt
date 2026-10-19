@@ -1,4 +1,4 @@
-// Modified by the CouchKit project (2026-10): terminal intro, goodbye screen, auto-close after the last sender leaves, probe-only black screen
+// Modified by the CouchKit project (2026-10): neutral TV icons, terminal intro, goodbye screen, auto-close after the last sender leaves, probe-only black screen
 package io.github.jqssun.airplay.ui
 
 import android.app.Activity
@@ -82,7 +82,7 @@ import kotlin.math.abs
 import kotlinx.coroutines.delay
 
 private enum class Tab(val labelRes: Int, val icon: ImageVector) {
-    OVERVIEW(R.string.tab_overview, Icons.Default.Cast),
+    OVERVIEW(R.string.tab_overview, Icons.Default.Tv),
     LOGS(R.string.tab_logs, Icons.AutoMirrored.Filled.Article),
     SETTINGS(R.string.tab_settings, Icons.Default.Settings)
 }
@@ -686,7 +686,7 @@ private fun OverviewContent(
                 if (state != ServerState.RUNNING || connections == 0) {
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         Icon(
-                            imageVector = if (connections > 0) Icons.Default.CastConnected else Icons.Default.Cast,
+                            imageVector = if (connections > 0) Icons.Default.ConnectedTv else Icons.Default.Tv,
                             contentDescription = null,
                             modifier = Modifier.size(64.dp),
                             tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)

@@ -18,6 +18,7 @@ HOME_A11Y=$HOME_PKG/$HOME_PKG.HomeKeyService
 HOME_DREAM=$HOME_PKG/.GlassDream
 STOCK_HOME_PKG=com.google.android.apps.tv.launcherx
 STOCK_HOME_ACT=$STOCK_HOME_PKG/$STOCK_HOME_PKG.home.HomeActivity
+ATV_HOME_PKG=com.google.android.tvlauncher
 SETUP_PKG=com.google.android.tungsten.setupwraith
 STATE_DIR="${COUCHKIT_STATE:-$HOME/.couchkit}"
 
@@ -93,7 +94,7 @@ case "$NAME" in *[!A-Za-z0-9\ ._-]*|"") die "--name may only contain letters, di
 if [ -z "$HOST" ]; then
   [ "$DRY" = 1 ] && HOST=192.0.2.10 || { usage; die "--host is required (the TV's IP address)"; }
 fi
-case "$HOST" in *:*) SERIAL="$HOST" ;; *) SERIAL="$HOST:5555" ;; esac
+case "$HOST" in *:*|emulator-*) SERIAL="$HOST" ;; *) SERIAL="$HOST:5555" ;; esac
 JOURNAL="$STATE_DIR/$(printf '%s' "$SERIAL" | tr -c 'A-Za-z0-9._-' '_').journal"
 
 if [ "$DRY" = 1 ]; then
@@ -221,6 +222,7 @@ apk_path() { # explicit path, or dist/<name>
 
 install_apk() { # pkg, apk, step
   local pkg="$1" apk="$2" before; before="$(pkg_state "$pkg")"
+  say "  If the TV asks about Play Protect / an unknown app, choose 'Install anyway' with the remote."
   adb_do install -r "$apk" || die "install failed: $apk"
   [ "$DRY" = 1 ] && DRY_INSTALLED="$DRY_INSTALLED$pkg "
   verify "$pkg installed" test "$(pkg_state "$pkg")" = enabled || die "$pkg is not installed"
@@ -295,8 +297,11 @@ step_home() {
 step_homekey() {
   hdr "Home button (accessibility service)"
   [ "$(pkg_state "$HOME_PKG")" = enabled ] || { warn "$HOME_PKG not installed - skipped"; return; }
-  # only Google TV's stock launcher grabs the Home key; elsewhere the default-home setting is enough
-  [ "$(pkg_state $STOCK_HOME_PKG)" = absent ] && { say "  stock Google TV launcher not present: not needed"; return; }
+  # the stock Google TV / Android TV launchers keep the Home key even when another app is the
+  # default home; elsewhere the default-home setting is enough
+  if [ "$(pkg_state $STOCK_HOME_PKG)" != enabled ] && [ "$(pkg_state $ATV_HOME_PKG)" != enabled ]; then
+    say "  no stock Google TV / Android TV launcher running: not needed"; return
+  fi
   local prev en new; prev="$(secure_get enabled_accessibility_services)"; en="$(secure_get accessibility_enabled)"
   case ":$prev:" in *":$HOME_A11Y:"*) ok "already enabled"; return ;; esac
   say "  The service only listens for the Home key while the stock home screen is in front; it cannot read screen content."

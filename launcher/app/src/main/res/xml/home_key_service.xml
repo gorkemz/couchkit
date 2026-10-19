@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- packageNames: the stock Google TV launcher, whose home screen is redirected to this app.
+<!-- packageNames: the stock Google TV / Android TV launchers, whose home screen is redirected to this app.
      Keep in sync with Launchers.PREVIOUS. -->
 <accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"
     android:accessibilityEventTypes="typeWindowStateChanged"
@@ -7,5 +7,5 @@
     android:accessibilityFlags="flagDefault"
     android:canRetrieveWindowContent="false"
     android:notificationTimeout="0"
-    android:packageNames="com.google.android.apps.tv.launcherx"
+    android:packageNames="com.google.android.apps.tv.launcherx,com.google.android.tvlauncher"
     android:description="@string/a11y_desc" />

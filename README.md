@@ -1,122 +1,136 @@
-# CouchKit
+<p align="center"><img src="docs/images/banner.png" alt="CouchKit" width="100%"></p>
 
-Turn a slow, ad-filled Android TV / Google TV into a fast, clean living-room screen:
+<p align="center">
+  <a href="LICENSE"><img alt="Apache-2.0" src="https://img.shields.io/badge/launcher%20%2B%20installer-Apache--2.0-blue"></a>
+  <a href="receiver/LICENSE"><img alt="GPL-3.0" src="https://img.shields.io/badge/receiver-GPL--3.0-blue"></a>
+  <img alt="Android TV 8+" src="https://img.shields.io/badge/Android%20TV-8.0%2B-3ddc84">
+  <a href="README.tr.md"><img alt="Türkçe" src="https://img.shields.io/badge/dil-T%C3%BCrk%C3%A7e-red"></a>
+</p>
 
-- **CouchKit Cast**: a screen-mirroring and media receiver for AirPlay-compatible senders
-  (iPhone, iPad, Mac). It starts on boot and comes to the front when someone connects. Based on
-  [android-airplay-server](https://github.com/jqssun/android-airplay-server) and UxPlay. GPL-3.0.
-- **CouchKit Home**: a lightweight glass-style home screen with a featured row, glass dock,
-  screensaver, weather, exchange rates and live match card. Each extra is optional and uses your
-  own API key. Apache-2.0.
-- **Installer**: a single adb script. It checks the device first, verifies every change and records
-  how to undo it.
+**CouchKit turns a slow, ad-filled Android TV / Google TV into a fast, clean living-room screen.**
+It has three parts, and you can install any of them on its own:
 
-Türkçe: [README.tr.md](README.tr.md)
+| | |
+|---|---|
+| 📺 **CouchKit Cast** | Mirror your iPhone, iPad or Mac to the TV. Works with AirPlay-compatible senders. It starts with the TV and comes to the front by itself when someone connects. |
+| 🛋️ **CouchKit Home** | A light, glass-style home screen. Optional extras: weather, exchange rates, live match card, featured row and screensaver. |
+| 🧰 **Installer** | One script that checks your TV and asks before every change. It verifies each change and can undo all of them. |
 
-> CouchKit is not affiliated with Apple, Google, TCL or any streaming service. Product names are
-> used only to describe compatibility ([TRADEMARKS.md](TRADEMARKS.md)). Read
-> [DISCLAIMER.md](DISCLAIMER.md) before changing your TV.
+<table>
+<tr>
+<td width="50%"><img src="docs/images/home.png" alt="Home screen"><br><sub><b>Home screen</b> with weather and exchange rates</sub></td>
+<td width="50%"><img src="docs/images/screensaver.png" alt="Screensaver"><br><sub><b>Screensaver</b>: your own photos and videos, or a moving gradient</sub></td>
+</tr>
+<tr>
+<td width="50%"><img src="docs/images/receiver.png" alt="Receiver"><br><sub><b>Receiver</b> waiting for a sender</sub></td>
+<td width="50%"><img src="docs/images/installer-dry-run.png" alt="Installer"><br><sub><b>Installer</b> preview (<code>--dry-run</code>)</sub></td>
+</tr>
+</table>
 
-## Which devices?
+## Quick start
+
+> **New to this?** The **[step-by-step guide](docs/GUIDE.md)** walks you through everything with
+> screenshots, from turning on developer options on the TV to the first screen mirroring session.
+> Türkçe kılavuz: **[docs/KILAVUZ.md](docs/KILAVUZ.md)**.
+
+1. On the TV, turn on **Developer options → USB debugging** and note the TV's IP address
+   ([how](docs/GUIDE.md#1-turn-on-developer-options-on-the-tv)).
+2. Install adb on your computer:
+   - macOS: `brew install android-platform-tools`
+   - Linux: `sudo apt install adb`
+   - Windows: [guide](docs/GUIDE.md#4-install-adb-on-your-computer)
+3. Download this repository. Put `couchkit-cast.apk` and `couchkit-home.apk` from **Releases**
+   into `dist/`, or build them with `./scripts/build.sh`.
+4. Preview, then install:
+   ```bash
+   ./install.sh --dry-run
+   ./install.sh --host 192.168.1.23
+   ```
+   Accept *Allow USB debugging?* on the TV. If the TV shows *Play Protect*, choose *Install anyway*.
+
+Undo at any time:
+
+```bash
+./install.sh --host 192.168.1.23 --undo     # reverts everything the script recorded
+./install.sh --host 192.168.1.23 --rescue   # brings the stock home screen back
+```
+
+### Or let Claude do it
+
+Open this folder in [Claude Code](https://claude.com/claude-code) and say *"install CouchKit on my
+TV"*. Claude follows [CLAUDE.md](CLAUDE.md):
+- it looks at the TV read-only first
+- it explains which steps fit your device
+- it runs the installer one step at a time, only after you approve each step
+
+## Which TVs?
 
 | Device | What you get |
 |---|---|
-| **Verified**: TCL Google TV "Smart TV Pro" (P735 series), Android 11, firmware `V8-R51MT05-LF1V620` | everything, including replacing the stock home screen and debloat |
-| Other TCL Android/Google TV | apps, start-on-boot fix and default home. Disabling packages needs `--allow-unverified`. |
-| Any other Android TV (SDK 26+) | safe mode: apps, permissions and default home. Nothing is disabled. |
-| Phones, tablets, non-TV devices | refused |
+| ✅ **Verified**: TCL Google TV "Smart TV Pro" (P735 series), Android 11, firmware `V8-R51MT05-LF1V620` | everything, including replacing the stock home screen (about 300 MB more free RAM) and debloat |
+| 🟡 Other TCL Android / Google TVs | apps, the start-on-boot fix and the default home screen. Disabling packages needs `--allow-unverified`. |
+| 🟢 Any other Android TV (Android 8+) | safe mode: apps, permissions and the default home screen. Nothing is disabled. |
+| ⛔ Phones, tablets, non-TV devices | refused |
 
-The list of verified devices is in [installer/verified-devices.txt](installer/verified-devices.txt).
-Reports for other models are welcome: see [docs/DEVICES.md](docs/DEVICES.md).
+Tested on another model? Please share the result: [docs/DEVICES.md](docs/DEVICES.md).
 
-## Install without help (about 10 minutes)
-
-1. **On the TV:** Settings → System → About → click *Build* 7 times → Developer options →
-   turn on **USB debugging** / **Network debugging**. Note the TV's IP address (Settings →
-   Network).
-2. **On your computer:** install adb.
-   - macOS: `brew install android-platform-tools`
-   - Debian/Ubuntu: `sudo apt install adb`
-   - Windows: use WSL
-3. **Get the apps.** Either download `couchkit-cast.apk` and `couchkit-home.apk` from the
-   Releases page into `dist/`, or build them with `./scripts/build.sh` (needs JDK 21 and the
-   Android SDK).
-4. **Preview first.** This changes nothing and does not connect to the TV:
-   ```
-   ./install.sh --dry-run
-   ```
-5. **Install:**
-   ```
-   ./install.sh --host 192.168.x.y
-   ```
-   The TV shows *Allow debugging?*. Tick *Always allow* and press OK. The script asks before
-   every change.
-
-Optional extras:
-
-```
-./install.sh --host 192.168.x.y --name "Bedroom TV" --config my-config.json --screensaver
-./install.sh --host 192.168.x.y --replace-stock-home     # frees ~300 MB RAM (verified devices)
-./install.sh --host 192.168.x.y --debloat=safe           # vendor telemetry/ads (verified devices)
-./install.sh --host 192.168.x.y --only receiver,autostart  # receiver only
-```
-
-Undo and status:
-
-```
-./install.sh --host 192.168.x.y --status   # read only
-./install.sh --host 192.168.x.y --undo     # reverts everything recorded, newest first
-./install.sh --host 192.168.x.y --rescue   # brings the stock home screen back
-```
-
-### What each step does
+## What the installer changes
 
 | Step | Change on the TV | Undo |
 |---|---|---|
-| `receiver` | installs CouchKit Cast, allows it to draw over apps, sets name and start-on-boot | uninstall, permission reset |
-| `launcher` | installs CouchKit Home, optionally pushes `config.json` | uninstall |
-| `autostart` | TCL only: allows the vendor boot manager to start both apps (`appops` 100/101, only if the firmware names them `APP_AUTO_START` / `APP_ASSOC_START`) | ops back to default |
+| `receiver` | installs CouchKit Cast, allows it to come to the front, sets its name and start-on-boot | uninstall, permission reset |
+| `launcher` | installs CouchKit Home and optionally your `config.json` | uninstall |
+| `autostart` | TCL only: lets the vendor boot manager start both apps (`appops` 100/101). It runs only if the firmware names these ops `APP_AUTO_START` / `APP_ASSOC_START`. | ops back to default |
 | `home` | makes CouchKit Home the default home screen | previous home restored |
-| `homekey` | Google TV only: enables CouchKit Home's Home-button accessibility service (it cannot read screen content) | previous accessibility setting restored |
-| `replace-stock-home` (opt-in) | disables the stock launcher **and** setup wizard together, after checking CouchKit Home is the home role holder. If the Home check fails it rolls back immediately. | both re-enabled, stock home set |
-| `debloat` (opt-in) | `pm disable-user` on [installer/debloat/](installer/debloat) lists. Nothing is ever uninstalled. | `pm enable` for each |
-| `screensaver` (opt-in) | sets the CouchKit screensaver | previous screensaver restored |
+| `homekey` | stock Google TV / Android TV launcher only: Home button service. It cannot read screen content. | previous setting restored |
+| `replace-stock-home` *(opt-in)* | disables the stock launcher **and** the setup wizard together. It first checks CouchKit Home is the home app, then verifies Home still works. If not, it rolls back immediately. | both re-enabled |
+| `debloat` *(opt-in)* | `pm disable-user` on the vendor telemetry and ad lists in [installer/debloat/](installer/debloat). Nothing is ever uninstalled. | `pm enable` each |
+| `screensaver` *(opt-in)* | sets the CouchKit screensaver | previous screensaver restored |
 
-**Why the stock launcher and the setup wizard go together:** on the verified TV, disabling only the
-stock launcher makes the setup wizard's recovery screen take over Home at the next boot. The TV then
-looks frozen. The installer never disables one without the other.
+**Why disable the launcher and the setup wizard together?** On the verified TV, disabling only the
+stock launcher makes the setup wizard's recovery screen take over the Home button at the next boot.
+The TV then looks frozen. The installer never disables one without the other.
 
-## Install with Claude Code
+## Home screen extras
 
-Open this folder in [Claude Code](https://claude.com/claude-code) and say *"install CouchKit on my TV"*.
-Claude reads [CLAUDE.md](CLAUDE.md), inspects the TV read-only, explains which steps fit your device,
-and runs the installer one step at a time after you approve.
+Every extra is **off until you turn it on** in `config.json`, and the API keys are your own.
+Copy [launcher/config.example.json](launcher/config.example.json), keep what you want and install
+it with `--config`.
 
-## Launcher configuration
-
-Copy [launcher/config.example.json](launcher/config.example.json) to `my-config.json`. Keep the
-sections you want, add your own keys and pass it with `--config`. Without a config file the home
-screen shows only apps, clock and gradient backgrounds. See [launcher/README.md](launcher/README.md).
+| Extra | Source | Key |
+|---|---|---|
+| Weather | [Open-Meteo](https://open-meteo.com) | none |
+| Exchange rates | [Frankfurter](https://frankfurter.dev) (ECB reference rates) | none |
+| Featured row (popular titles per streaming app) | [TMDB](https://www.themoviedb.org) | your free TMDB key |
+| Live match card + goal alert | [API-Football](https://www.api-football.com) | your free key (100 requests/day) |
+| Screensaver | your own photos/videos in `Android/data/io.couchkit.home/files/screensaver/` | none |
 
 ## Build from source
 
+```bash
+./scripts/build.sh                  # receiver uses upstream's unmodified native libraries
+./scripts/build.sh --native-source  # build the receiver's native code from source as well
 ```
-git clone <this repo> && cd couchkit   # submodules are only needed for --native-source
-./scripts/build.sh                  # receiver uses upstream's unmodified native libs (armeabi-v7a)
-./scripts/build.sh --native-source  # build the receiver's native code from source (all ABIs)
-```
 
-Release signing uses your own key: see [receiver/README.md](receiver/README.md) and
-[launcher/README.md](launcher/README.md). This project never ships a signing key.
+You need JDK 21 and the Android SDK (Android Studio includes both). Release signing uses your own
+key ([receiver](receiver/README.md), [launcher](launcher/README.md)). This project never ships a
+signing key.
 
-## Licenses
+## Legal
 
-- `receiver/` is GPL-3.0. It is a modified upstream: [receiver/CHANGES.md](receiver/CHANGES.md).
-- Everything else is Apache-2.0 ([LICENSE](LICENSE)).
-- Third-party components are listed in [THIRD_PARTY.md](THIRD_PARTY.md) and [NOTICE](NOTICE).
+- **Licenses:**
+  - `receiver/` is **GPL-3.0**. It is a modified
+    [android-airplay-server](https://github.com/jqssun/android-airplay-server) (based on
+    [UxPlay](https://github.com/FDH2/UxPlay)); changes are in [receiver/CHANGES.md](receiver/CHANGES.md).
+  - Everything else is **Apache-2.0**.
+  - Details: [NOTICE](NOTICE) and [THIRD_PARTY.md](THIRD_PARTY.md).
+- **Not affiliated:** CouchKit is not affiliated with Apple, Google, TCL or any streaming service.
+  Product names are used only to describe compatibility ([TRADEMARKS.md](TRADEMARKS.md)). Protected
+  (DRM) content cannot be mirrored.
+- **No warranty:** the software changes system settings of your TV. Read [DISCLAIMER.md](DISCLAIMER.md).
 
 ## Contributing
 
-Run `./scripts/secret-scan.sh` before every commit. Follow the rules in
-[TRADEMARKS.md](TRADEMARKS.md): no third-party logos, fonts, wallpapers or videos, and no brand
-names in app or package names.
+Run `./scripts/secret-scan.sh` before every commit. Follow [TRADEMARKS.md](TRADEMARKS.md):
+- no third-party logos, fonts, wallpapers or videos
+- no brand names in app or package names
